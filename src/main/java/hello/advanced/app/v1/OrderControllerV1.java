@@ -1,29 +1,17 @@
 package hello.advanced.app.v1;
 
-import hello.advanced.trace.TraceStatus;
-import hello.advanced.trace.hellotrace.HelloTraceV1;
-import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-@RestController
-@RequiredArgsConstructor
-public class OrderControllerV1 {
-
-    private final OrderServiceV1 orderService;
-    private final HelloTraceV1 trace;
+@RequestMapping// 스프링은 @Controller 또는 RequestMapping 이 있어야 스프링 컨트롤러로 인식
+@ResponseBody
+public interface OrderControllerV1 {
 
     @GetMapping("/v1/request")
-    public String request(String itemId) {
-        TraceStatus status = null;
-        try {
-            status = trace.begin("OrderControllerV1.request()");
-            orderService.orderItem(itemId);
-            trace.end(status);
-            return "ok";
-        } catch (Exception e) {
-            trace.exception(status, e);
-            throw e; // 예외를 꼭 다시 던져주어야 한다.
-        }
-    }
+    String request(@RequestParam("itemId") String itemId);
+
+    @GetMapping("/v1/no-long")
+    String noLong();
 }

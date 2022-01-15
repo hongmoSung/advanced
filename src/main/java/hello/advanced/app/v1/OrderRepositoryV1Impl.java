@@ -1,12 +1,8 @@
-package hello.advanced.app.v0;
+package hello.advanced.app.v1;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
+public class OrderRepositoryV1Impl implements OrderRepositoryV1 {
 
-@Repository
-@RequiredArgsConstructor
-public class OrderRepositoryV0 {
-
+    @Override
     public void save(String itemId) {
         // 저장 로직
         if (itemId.equals("ex")) {
