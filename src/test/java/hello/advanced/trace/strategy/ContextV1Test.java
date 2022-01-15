@@ -1,5 +1,7 @@
 package hello.advanced.trace.strategy;
 
+import hello.advanced.trace.strategy.code.strategy.ContextV1;
+import hello.advanced.trace.strategy.code.strategy.StrategyLogic1;
 import hello.advanced.trace.template.code.AbstractTemplates;
 import hello.advanced.trace.template.code.SubClassLogic1;
 import hello.advanced.trace.template.code.SubClassLogic2;
@@ -35,36 +37,16 @@ public class ContextV1Test {
         log.info("resultTime = {}", resultTime);
     }
 
-    /**
-     * 템플릿 메서드 패턴 적용
-     */
     @Test
-    void templateMethodV1() {
-        AbstractTemplates template1 = new SubClassLogic1();
-        template1.execute();
+    void strategyV1() {
+        StrategyLogic1 strategyLogic1 = new StrategyLogic1();
+        ContextV1 context1 = new ContextV1(strategyLogic1);
+        context1.execute();
 
-        AbstractTemplates template2 = new SubClassLogic2();
-        template2.execute();
+        StrategyLogic1 strategyLogic2 = new StrategyLogic1();
+        ContextV1 context2 = new ContextV1(strategyLogic2);
+        context2.execute();
     }
 
-    @Test
-    void templateMethodV2() {
-        AbstractTemplates templates1 = new AbstractTemplates() {
-            @Override
-            protected void call() {
-                log.info("비즈니스 로직1 실행");
-            }
-        };
-
-        AbstractTemplates templates2 = new AbstractTemplates() {
-            @Override
-            protected void call() {
-                log.info("비즈니스 로직2 실행");
-            }
-        };
-
-        templates1.execute();
-        templates2.execute();
-    }
 
 }
